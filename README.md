@@ -5,7 +5,7 @@ version: '3'
 services:
   svn:
     container_name: svn
-    image: bxwill/svn:1.13
+    image: bxwill/svn:1.10
     ports:
       - 80:80
       - 3690:3690
