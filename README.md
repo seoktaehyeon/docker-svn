@@ -12,7 +12,7 @@ services:
       - 3690:3690
     volumes:
       - ./repos:/var/repos
-#      - ./dav_svn.passwd:/etc/apache2/dav_svn.passwd
+      - ./dav_svn_passwd:/var/dav_svn_passwd
 ```
 
 #### Create Repository
@@ -23,7 +23,3 @@ cd /var/repos
 svnadmin create <PROJECT NAME>
 ```
 
-#### Create web username and password
-```bash
-htpasswd -cm /etc/apache2/dav_svn.passwd username password
-```
