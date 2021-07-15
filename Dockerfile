@@ -4,7 +4,9 @@ LABEL maintainer="v.stone@163.com"
 RUN apt-get update \
     && apt-get install -y subversion \
     && apt-get install -y libapache2-mod-svn \
-    && mkdir /var/repos
+    && mkdir /var/repos \
+    && svnserve --version \
+    && svnserve -d -r /var/repos
 
 WORKDIR /var/repos
 
