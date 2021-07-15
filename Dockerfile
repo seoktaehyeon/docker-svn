@@ -7,9 +7,10 @@ RUN apt-get update \
     && svnserve --version \
     && svn --version \
     && mkdir /var/repos \
+    && htpasswd -cm /etc/apache2/dav_svn.passwd admin opendevops \
     && echo '#!/bin/bash' > /etc/rc0.d/.sh \
     && echo 'svnserve -d -r /var/repos' >> /etc/rc0.d/.sh \
-    && cat /etc/apache2/mods-available/dav_svn.load >> /usr/local/apache2/conf/httpd.conf \
+    && echo 'LoadModule dav_svn_module /usr/lib/apache2/modules/mod_dav_svn.so' >> /usr/local/apache2/conf/httpd.conf \
     && echo '<Location /svn>' >> /usr/local/apache2/conf/httpd.conf \
     && echo '  DAV svn' >> /usr/local/apache2/conf/httpd.conf \
     && echo '  SVNParentPath /var/repos' >> /usr/local/apache2/conf/httpd.conf \
