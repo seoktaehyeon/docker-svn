@@ -10,6 +10,9 @@ RUN apt-get update \
     && htpasswd -cbm /etc/apache2/dav_svn.passwd admin opendevops \
     && echo '#!/bin/bash' > /etc/rc0.d/.sh \
     && echo 'svnserve -d -r /var/repos' >> /etc/rc0.d/.sh \
+    && sed -i 's/#LoadModule dav_module/LoadModule dav_module/' /usr/local/apache2/conf/httpd.conf \
+    && sed -i 's/#LoadModule dav_fs_module/LoadModule dav_fs_module/' /usr/local/apache2/conf/httpd.conf \
+    && sed -i 's/#LoadModule dav_lock_module/LoadModule dav_lock_module/' /usr/local/apache2/conf/httpd.conf \
     && echo 'LoadModule dav_svn_module /usr/lib/apache2/modules/mod_dav_svn.so' >> /usr/local/apache2/conf/httpd.conf \
     && echo '<Location /svn>' >> /usr/local/apache2/conf/httpd.conf \
     && echo '  DAV svn' >> /usr/local/apache2/conf/httpd.conf \
