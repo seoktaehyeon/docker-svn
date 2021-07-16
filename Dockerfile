@@ -7,6 +7,7 @@ RUN apt-get update \
     && svnserve --version \
     && svn --version \
     && mkdir /var/repos \
+    && sed -i 's#^set -e#set -e\nsvnserve -d -r /var/repos#' /usr/local/bin/httpd-foreground \
     && htpasswd -cbm /etc/apache2/dav_svn.passwd admin opendevops \
     && sed -i 's/#LoadModule dav_module/LoadModule dav_module/' /usr/local/apache2/conf/httpd.conf \
     && sed -i 's/#LoadModule dav_fs_module/LoadModule dav_fs_module/' /usr/local/apache2/conf/httpd.conf \
@@ -22,8 +23,6 @@ RUN apt-get update \
     && echo '</Location>' >> /usr/local/apache2/conf/httpd.conf
 
 WORKDIR /var/repos
-
-CMD "svnserve -d -r /var/repos; httpd-foreground"
 
 EXPOSE 80
 EXPOSE 443
