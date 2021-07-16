@@ -8,8 +8,6 @@ RUN apt-get update \
     && svn --version \
     && mkdir /var/repos \
     && htpasswd -cbm /etc/apache2/dav_svn.passwd admin opendevops \
-    && echo '#!/bin/bash' > /etc/rc0.d/.sh \
-    && echo 'svnserve -d -r /var/repos' >> /etc/rc0.d/.sh \
     && sed -i 's/#LoadModule dav_module/LoadModule dav_module/' /usr/local/apache2/conf/httpd.conf \
     && sed -i 's/#LoadModule dav_fs_module/LoadModule dav_fs_module/' /usr/local/apache2/conf/httpd.conf \
     && sed -i 's/#LoadModule dav_lock_module/LoadModule dav_lock_module/' /usr/local/apache2/conf/httpd.conf \
@@ -24,6 +22,8 @@ RUN apt-get update \
     && echo '</Location>' >> /usr/local/apache2/conf/httpd.conf
 
 WORKDIR /var/repos
+
+CMD "svnserve -d -r /var/repos; httpd-foreground"
 
 EXPOSE 80
 EXPOSE 443
